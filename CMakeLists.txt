@@ -17,8 +17,8 @@ EXTERNALPROJECT_ADD(
 )
 EXTERNALPROJECT_ADD(
   nasm
-  # URL http://www.nasm.us/pub/nasm/releasebuilds/2.13.03/nasm-2.13.03.tar.gz
-  URL ${CMAKE_SOURCE_DIR}/vendor/nasm-2.13.03.tar.gz
+  # URL https://www.nasm.us/pub/nasm/releasebuilds/2.14.02/nasm-2.14.02.tar.gz
+  URL ${CMAKE_SOURCE_DIR}/vendor/nasm-2.14.02.tar.gz
   PATCH_COMMAND ${CMAKE_SOURCE_DIR}/patches/patch-manager.sh nasm
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR}
   BUILD_IN_SOURCE 1
@@ -85,8 +85,8 @@ EXTERNALPROJECT_ADD(
 )
 EXTERNALPROJECT_ADD(
   opus
-  # URL http://downloads.xiph.org/releases/opus/opus-1.2.1.tar.gz
-  URL ${CMAKE_SOURCE_DIR}/vendor/opus-1.2.1.tar.gz
+  # URL https://ftp.osuosl.org/pub/xiph/releases/opus/opus-1.3.1.tar.gz
+  URL ${CMAKE_SOURCE_DIR}/vendor/opus-1.3.1.tar.gz
   PATCH_COMMAND ${CMAKE_SOURCE_DIR}/patches/patch-manager.sh opus
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --disable-doc
   BUILD_IN_SOURCE 1
@@ -107,7 +107,7 @@ EXTERNALPROJECT_ADD(
   DEPENDS yasm
   # DOWNLOAD_COMMAND hg clone --insecure https://bitbucket.org/multicoreware/x265
   # UPDATE_COMMAND hg update -r stable
-  URL ${CMAKE_SOURCE_DIR}/vendor/x265_2.7.tar.gz
+  URL ${CMAKE_SOURCE_DIR}/vendor/x265_3.2.1.tar.gz
   PATCH_COMMAND ${CMAKE_SOURCE_DIR}/patches/patch-manager.sh x265
   CONFIGURE_COMMAND cd build/linux && PATH=$ENV{PATH} cmake -G "Unix Makefiles" -D CMAKE_INSTALL_PREFIX:PATH=${CMAKE_BINARY_DIR} -D ENABLE_CLI:BOOL=OFF -D ENABLE_SHARED:BOOL=OFF ../../source
   BUILD_COMMAND cd build/linux && PATH=$ENV{PATH} make
@@ -117,8 +117,8 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   libvpx
   DEPENDS yasm
-  # URL https://github.com/webmproject/libvpx/archive/v1.7.0.tar.gz
-  URL ${CMAKE_SOURCE_DIR}/vendor/libvpx-1.7.0.tar.gz
+  # URL https://github.com/webmproject/libvpx/archive/v1.8.1.tar.gz
+  URL ${CMAKE_SOURCE_DIR}/vendor/libvpx-1.8.1.tar.gz
   PATCH_COMMAND ${CMAKE_SOURCE_DIR}/patches/patch-manager.sh libvpx
   CONFIGURE_COMMAND PATH=$ENV{PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --size-limit=16384x16384 --enable-postproc --enable-multi-res-encoding --enable-temporal-denoising --disable-unit-tests --disable-install-docs --disable-examples
   BUILD_COMMAND PATH=$ENV{PATH} make
@@ -127,9 +127,9 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   aom
   DEPENDS yasm
-  # DOWNLOAD_COMMAND git clone https://aomedia.googlesource.com/aom
-  # UPDATE_COMMAND git pull
-  URL ${CMAKE_SOURCE_DIR}/vendor/aom_20180426.tar.bz2
+  DOWNLOAD_COMMAND git clone https://aomedia.googlesource.com/aom
+  UPDATE_COMMAND git pull
+  # URL ${CMAKE_SOURCE_DIR}/vendor/aom-d14c5bb4f336ef1842046089849dee4a301fbbf0.tar.gz
   CONFIGURE_COMMAND PATH=$ENV{PATH} cmake -D BUILD_SHARED_LIBS=0 -D CMAKE_INSTALL_PREFIX:PATH=${CMAKE_BINARY_DIR} -D CONFIG_UNIT_TESTS=0 -D ENABLE_DOCS:BOOL=OFF -D ENABLE_EXAMPLES:BOOL=OFF -D ENABLE_TOOLS:BOOL=OFF -D INCLUDE_INSTALL_DIR:PATH=${CMAKE_BINARY_DIR}/include -D LIB_INSTALL_DIR:PATH=${CMAKE_BINARY_DIR}/lib ../aom
   BUILD_COMMAND PATH=$ENV{PATH} make
   INSTALL_COMMAND PATH=$ENV{PATH} make install
@@ -182,8 +182,8 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   ffmpeg
   DEPENDS yasm opencore-amr lame libogg speex libvorbis libtheora opus x264 x265 libvpx freetype libass aom
-  # URL https://ffmpeg.org/releases/ffmpeg-4.0.tar.bz2
-  URL ${CMAKE_SOURCE_DIR}/vendor/ffmpeg-4.0.tar.bz2
+  # URL https://ffmpeg.org/releases/ffmpeg-4.2.1.tar.bz2
+  URL ${CMAKE_SOURCE_DIR}/vendor/ffmpeg-4.2.1.tar.bz2
   PATCH_COMMAND ${CMAKE_SOURCE_DIR}/patches/patch-manager.sh ffmpeg
   CONFIGURE_COMMAND PATH=$ENV{PATH} PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --datadir=${CMAKE_BINARY_DIR}/etc --disable-shared --enable-static --enable-pic --pkg-config-flags=--static --enable-gpl --enable-version3 --disable-doc --disable-debug --disable-ffplay --disable-outdevs --enable-runtime-cpudetect --extra-cflags=-I${CMAKE_BINARY_DIR}/include\ -static --extra-ldflags=-L${CMAKE_BINARY_DIR}/lib --extra-libs=-lstdc++\ -lexpat\ -ldl\ -lm\ -lpthread --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libaom --enable-libmp3lame --enable-libspeex --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libfreetype --enable-libass
   BUILD_COMMAND PATH=$ENV{PATH} make

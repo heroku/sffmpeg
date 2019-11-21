@@ -7,4 +7,4 @@ WORKDIR /home/work/sffmpeg
 
 RUN mk-build-deps -t "apt-get --no-install-recommends -y" -r -i debian/control
 
-CMD make deb
+CMD make && make deb

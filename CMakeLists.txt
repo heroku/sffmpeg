@@ -29,6 +29,13 @@ EXTERNALPROJECT_ADD(
   BUILD_IN_SOURCE 1
 )
 EXTERNALPROJECT_ADD(
+  mbedtls
+  # URL https://tls.mbed.org/download/mbedtls-2.16.3-apache.tgz
+  URL ${CMAKE_SOURCE_DIR}/vendor/mbedtls-2.16.3-apache.tgz
+  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_BINARY_DIR} -DBUILD_SHARED_LIBS=OFF -DENABLE_TESTING=Off
+  BUILD_IN_SOURCE 1
+)
+EXTERNALPROJECT_ADD(
   opencore-amr
   # URL http://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.5.tar.gz
   URL ${CMAKE_SOURCE_DIR}/vendor/opencore-amr-0.1.5.tar.gz
@@ -163,10 +170,10 @@ EXTERNALPROJECT_ADD(
 )
 EXTERNALPROJECT_ADD(
   ffmpeg
-  DEPENDS yasm opencore-amr lame libogg speex libvorbis libtheora opus x264 x265 libvpx freetype libass aom
+  DEPENDS yasm opencore-amr lame libogg speex libvorbis libtheora opus x264 x265 libvpx freetype libass aom mbedtls
   # URL https://ffmpeg.org/releases/ffmpeg-4.2.1.tar.bz2
   URL ${CMAKE_SOURCE_DIR}/vendor/ffmpeg-4.2.1.tar.bz2
-  CONFIGURE_COMMAND PATH=$ENV{PATH} PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --datadir=${CMAKE_BINARY_DIR}/etc --disable-shared --enable-static --enable-pic --pkg-config-flags=--static --enable-gpl --enable-version3 --disable-doc --disable-debug --disable-ffplay --disable-outdevs --enable-runtime-cpudetect --extra-cflags=-I${CMAKE_BINARY_DIR}/include\ -static --extra-ldflags=-L${CMAKE_BINARY_DIR}/lib --extra-libs=-lstdc++\ -lexpat\ -ldl\ -lm\ -lpthread --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libaom --enable-libmp3lame --enable-libspeex --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libfreetype --enable-libass
+  CONFIGURE_COMMAND PATH=$ENV{PATH} PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --datadir=${CMAKE_BINARY_DIR}/etc --disable-shared --enable-static --enable-pic --pkg-config-flags=--static --enable-gpl --enable-version3 --disable-doc --disable-debug --disable-ffplay --disable-outdevs --enable-runtime-cpudetect --extra-cflags=-I${CMAKE_BINARY_DIR}/include\ -static --extra-ldflags=-L${CMAKE_BINARY_DIR}/lib --extra-libs=-lstdc++\ -lexpat\ -ldl\ -lm\ -lpthread --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libaom --enable-libmp3lame --enable-libspeex --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libfreetype --enable-libass --enable-mbedtls
   BUILD_COMMAND PATH=$ENV{PATH} make
   BUILD_IN_SOURCE 1
 )

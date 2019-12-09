@@ -1,8 +1,14 @@
+sffmpeg (4.2.1-1) stable; urgency=medium
+
+  * add support for TLS with mbedTLS
+
+ -- Craig Ingram <cingram@heroku.com> Thu, 05 Dec 2019 12:00:00 +0200
+
 sffmpeg (4.2.1) stable; urgency=medium
 
   * upgrade to FFmpeg 4.2.1
 
- -- Craig Ingram <cingram@sheroku.com>  Thu, 21 Nov 2019 12:00:00 +0200
+ -- Craig Ingram <cingram@heroku.com>  Thu, 21 Nov 2019 12:00:00 +0200
 
 sffmpeg (4.0.0-1) stable; urgency=medium
 

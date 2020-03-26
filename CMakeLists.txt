@@ -121,9 +121,9 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   aom
   DEPENDS yasm
-  DOWNLOAD_COMMAND git clone https://aomedia.googlesource.com/aom
-  UPDATE_COMMAND git pull
-  # URL ${CMAKE_SOURCE_DIR}/vendor/aom-20191119-2bf41e9.tar.gz
+  # DOWNLOAD_COMMAND git clone https://aomedia.googlesource.com/aom
+  # UPDATE_COMMAND git pull
+  URL ${CMAKE_SOURCE_DIR}/vendor/aom-4eb1e7795b9700d532af38a2d9489458a8038233.tar.gz
   CONFIGURE_COMMAND PATH=$ENV{PATH} cmake -D BUILD_SHARED_LIBS=0 -D CMAKE_INSTALL_PREFIX:PATH=${CMAKE_BINARY_DIR} -D CONFIG_UNIT_TESTS=0 -D ENABLE_DOCS:BOOL=OFF -D ENABLE_EXAMPLES:BOOL=OFF -D ENABLE_TOOLS:BOOL=OFF -D INCLUDE_INSTALL_DIR:PATH=${CMAKE_BINARY_DIR}/include -D LIB_INSTALL_DIR:PATH=${CMAKE_BINARY_DIR}/lib ../aom
   BUILD_COMMAND PATH=$ENV{PATH} make
   INSTALL_COMMAND PATH=$ENV{PATH} make install
@@ -173,7 +173,7 @@ EXTERNALPROJECT_ADD(
   DEPENDS yasm opencore-amr lame libogg speex libvorbis libtheora opus x264 x265 libvpx freetype libass aom mbedtls
   # URL https://ffmpeg.org/releases/ffmpeg-4.2.1.tar.bz2
   URL ${CMAKE_SOURCE_DIR}/vendor/ffmpeg-4.2.1.tar.bz2
-  CONFIGURE_COMMAND PATH=$ENV{PATH} PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --datadir=${CMAKE_BINARY_DIR}/etc --disable-shared --enable-static --enable-pic --pkg-config-flags=--static --enable-gpl --enable-version3 --disable-doc --disable-debug --disable-ffplay --disable-outdevs --enable-runtime-cpudetect --extra-cflags=-I${CMAKE_BINARY_DIR}/include\ -static --extra-ldflags=-L${CMAKE_BINARY_DIR}/lib --extra-libs=-lstdc++\ -lexpat\ -ldl\ -lm\ -lpthread --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libaom --enable-libmp3lame --enable-libspeex --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libfreetype --enable-libass --enable-mbedtls
+  CONFIGURE_COMMAND PATH=$ENV{PATH} PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --datadir=${CMAKE_BINARY_DIR}/etc --disable-shared --enable-static --enable-pic --pkg-config-flags=--static --enable-gpl --enable-version3 --disable-doc --disable-debug --disable-ffplay --disable-outdevs --enable-runtime-cpudetect --extra-cflags=-I${CMAKE_BINARY_DIR}/include\ -static --extra-ldflags=-L${CMAKE_BINARY_DIR}/lib --extra-ldexeflags=-static --extra-libs=-lstdc++\ -lexpat\ -ldl\ -lm\ -lpthread --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libaom --enable-libmp3lame --enable-libspeex --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libfreetype --enable-libass --enable-mbedtls
   BUILD_COMMAND PATH=$ENV{PATH} make
   BUILD_IN_SOURCE 1
 )

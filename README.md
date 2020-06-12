@@ -22,9 +22,9 @@ multiple builds of FFmpeg on the same host.
 
 Just type the following commands at the shell prompt:
 
-    $ git clone https://github.com/pyke369/sffmpeg
-    $ cd sffmpeg
-    $ make
+    $ git clone https://github.com/heroku/sffmpeg
+    $ docker build -t heroku/sffmpeg .
+    $ docker run heroku/sffmpeg /bin/bash -c "make"
 
 Then go grab a coffee (or maybe two). The helper will download and compile all FFmpeg dependencies for you.
 Once done, you should get a FFmpeg binary in the `build/bin` directory (with all dependencies statically linked-in).
@@ -53,7 +53,7 @@ From there, you may use the binary immediately or build a Debian package for lat
 
 You may optionally build a Debian package by typing the following command at the shell prompt:
 
-    $ make deb
+    $ docker run heroku/sffmpeg /bin/bash -c "make deb"
 
 The `ffmpeg`, `ffprobe` and `frmxtract` binaries will be installed by the package in the `/usr/bin` directory.
 
@@ -62,3 +62,20 @@ The `ffmpeg`, `ffprobe` and `frmxtract` binaries will be installed by the packag
     Unpacking sffmpeg (from sffmpeg_3.0_amd64.deb) ...
     Setting up sffmpeg (3.0) ...
 
+## Updating
+
+When upgrading the version of FFmpeg in use, the minimum required for the pull request is:
+
+* Download the latest ffmpeg release and replace the existing one in the `vendor` directory
+* Modify `CMakeLists.txt` to point to the new vendored ffmpeg release. 
+* Modify `debian/changelog` file to bump the version number for the package. 
+
+If building ffmpeg fails with a simple upgrade described above, or other dependencies need to be updated as well, you will need to perform the first two steps above for each of the other dependencies. Occasionally those other dependencies will include major version upgrades which require more detailed changes to the CMake configuration for the dependency itself, as well as ffmpeg. Take special care to do thorough testing to make sure the project not only still builds, but the package works on the Heroku stack images!
+
+## S3 Upload
+
+Once any Pull Request is merged into `master`, the `.deb` package is automatically uploaded by CircleCI to the S3 bucket used by the [Heroku Active Storage Preview Buildpack](https://github.com/heroku/heroku-buildpack-activestorage-preview/). 
+
+Be sure that any PRs bump the version number in the `changelog` so that your new version does not overwrite the existing version in use by users of that buildpack. 
+
+You will need to submit a PR in the buildpack repo to bump the `SFFMPEG_VERSION` in `bin/compile`. Be sure to use your PR branch on the buildpack to deploy some [test apps](https://github.com/heroku/active_storage_with_previews_example) with the new build and make sure nothing is broken.

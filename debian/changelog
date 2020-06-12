@@ -1,3 +1,9 @@
+sffmpeg (4.2.3) stable; urgency=medium
+
+  * upgrade to FFmpeg 4.2.3
+
+ -- Craig Ingram <cingram@heroku.com>  Thu, 12 Jun 2020 12:00:00 +0200
+
 sffmpeg (4.2.1-2) stable; urgency=medium
 
   * fix non-static dependencies

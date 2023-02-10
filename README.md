@@ -29,7 +29,6 @@ Just type the following commands at the shell prompt:
 Then go grab a coffee (or maybe two). The helper will download and compile all FFmpeg dependencies for you.
 Once done, you should get a FFmpeg binary in the `build/bin` directory (with all dependencies statically linked-in).
 
-
     ffmpeg version 3.0 Copyright (c) 2000-2016 the FFmpeg developers
       libavutil      55. 17.103 / 55. 17.103
       libavcodec     57. 24.102 / 57. 24.102
@@ -43,7 +42,6 @@ Once done, you should get a FFmpeg binary in the `build/bin` directory (with all
     usage: ffmpeg [options] [[infile options] -i infile]... {[outfile options] outfile}...
 
     Use -h to get full help or, even better, run 'man ffmpeg'
-
 
 From there, you may use the binary immediately or build a Debian package for later deployment (see below).
 
@@ -64,18 +62,47 @@ The `ffmpeg`, `ffprobe` and `frmxtract` binaries will be installed by the packag
 
 ## Updating
 
+FYI: See a [list of ffmpeg versions](https://ffmpeg.org/security.html). An example of an update can be seen [on PRs](https://github.com/heroku/sffmpeg/pull/9).
+
 When upgrading the version of FFmpeg in use, the minimum required for the pull request is:
 
 * Download the latest ffmpeg release and replace the existing one in the `vendor` directory
-* Modify `CMakeLists.txt` to point to the new vendored ffmpeg release. 
-* Modify `debian/changelog` file to bump the version number for the package. 
+* Modify `CMakeLists.txt` to point to the new vendored ffmpeg release.
+* Modify `debian/changelog` file to bump the version number for the package.
 
 If building ffmpeg fails with a simple upgrade described above, or other dependencies need to be updated as well, you will need to perform the first two steps above for each of the other dependencies. Occasionally those other dependencies will include major version upgrades which require more detailed changes to the CMake configuration for the dependency itself, as well as ffmpeg. Take special care to do thorough testing to make sure the project not only still builds, but the package works on the Heroku stack images!
 
 ## S3 Upload
 
-Once any Pull Request is merged into `master`, the `.deb` package is automatically uploaded by CircleCI to the S3 bucket used by the [Heroku Active Storage Preview Buildpack](https://github.com/heroku/heroku-buildpack-activestorage-preview/). 
+- Make sure you're on the `main` branch with a clean working directory:
 
-Be sure that any PRs bump the version number in the `changelog` so that your new version does not overwrite the existing version in use by users of that buildpack. 
+```
+git checkout main
+git status
+```
 
-You will need to submit a PR in the buildpack repo to bump the `SFFMPEG_VERSION` in `bin/compile`. Be sure to use your PR branch on the buildpack to deploy some [test apps](https://github.com/heroku/active_storage_with_previews_example) with the new build and make sure nothing is broken.
+You should see:
+
+```
+$ git status
+On branch main
+nothing to commit, working tree clean
+```
+
+- Make sure everything builds fine:
+
+```
+docker build -t heroku/sffmpeg .
+docker run heroku/sffmpeg /bin/bash -c "make"
+```
+
+- Take note of the [AWS account for `heroku-activestorage-default`](https://github.com/heroku/languages-team/blob/main/guides/creds.md#aws-resources).
+- Follow directions to [Request S3 permissions](https://github.com/heroku/languages-team/blob/main/guides/aws-access.md).
+- After setting up appropriate env vars, run this command to build and publish the binary to S3:
+
+```
+docker run -e "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" -e "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" heroku/sffmpeg /bin/bash -c "make && make deb && aws s3 cp ../sffmpeg*.deb s3://heroku-activestorage-default/sffmpeg/"
+```
+
+- Once updated make a PR to the [active storage buildpack](https://github.com/heroku/heroku-buildpack-activestorage-preview) to update the `SFFMPEG_VERSION` in `bin/compile`.
+- Validate that branch works by deploying [test apps](https://github.com/heroku/active_storage_with_previews_example).

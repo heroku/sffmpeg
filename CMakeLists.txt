@@ -9,6 +9,7 @@ SET(ENV{PKG_CONFIG_PATH} ${CMAKE_BINARY_DIR}/lib/pkgconfig)
 
 EXTERNALPROJECT_ADD(
   yasm
+
   # URL http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz
   URL ${CMAKE_SOURCE_DIR}/vendor/yasm-1.3.0.tar.gz
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR}
@@ -16,6 +17,7 @@ EXTERNALPROJECT_ADD(
 )
 EXTERNALPROJECT_ADD(
   nasm
+
   # URL https://www.nasm.us/pub/nasm/releasebuilds/2.14.02/nasm-2.14.02.tar.gz
   URL ${CMAKE_SOURCE_DIR}/vendor/nasm-2.14.02.tar.gz
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR}
@@ -23,6 +25,7 @@ EXTERNALPROJECT_ADD(
 )
 EXTERNALPROJECT_ADD(
   zlib
+
   # URL https://github.com/madler/zlib/archive/v1.2.11.tar.gz
   URL ${CMAKE_SOURCE_DIR}/vendor/zlib-v1.2.11.tar.gz
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR} --static
@@ -30,6 +33,7 @@ EXTERNALPROJECT_ADD(
 )
 EXTERNALPROJECT_ADD(
   mbedtls
+
   # URL https://tls.mbed.org/download/mbedtls-2.16.3-apache.tgz
   URL ${CMAKE_SOURCE_DIR}/vendor/mbedtls-2.16.3-apache.tgz
   CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_BINARY_DIR} -DBUILD_SHARED_LIBS=OFF -DENABLE_TESTING=Off
@@ -37,6 +41,7 @@ EXTERNALPROJECT_ADD(
 )
 EXTERNALPROJECT_ADD(
   opencore-amr
+
   # URL http://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.5.tar.gz
   URL ${CMAKE_SOURCE_DIR}/vendor/opencore-amr-0.1.5.tar.gz
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared
@@ -45,6 +50,7 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   lame
   DEPENDS nasm
+
   # URL http://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
   URL ${CMAKE_SOURCE_DIR}/vendor/lame-3.100.tar.gz
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --enable-nasm
@@ -52,6 +58,7 @@ EXTERNALPROJECT_ADD(
 )
 EXTERNALPROJECT_ADD(
   libogg
+
   # URL http://downloads.xiph.org/releases/ogg/libogg-1.3.3.tar.gz
   URL ${CMAKE_SOURCE_DIR}/vendor/libogg-1.3.3.tar.gz
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared
@@ -60,14 +67,16 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   speex
   DEPENDS libogg
+
   # URL http://downloads.xiph.org/releases/speex/speex-1.2.0.tar.gz
   URL ${CMAKE_SOURCE_DIR}/vendor/speex-1.2.0.tar.gz
-  CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --enable-sse  --disable-oggtest --with-ogg=${CMAKE_BINARY_DIR}
+  CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --enable-sse --disable-oggtest --with-ogg=${CMAKE_BINARY_DIR}
   BUILD_IN_SOURCE 1
 )
 EXTERNALPROJECT_ADD(
   libvorbis
   DEPENDS libogg
+
   # URL http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.6.tar.gz
   URL ${CMAKE_SOURCE_DIR}/vendor/libvorbis-1.3.6.tar.gz
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --disable-oggtest
@@ -76,6 +85,7 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   libtheora
   DEPENDS libogg
+
   # URL http://downloads.xiph.org/releases/theora/libtheora-1.2.0alpha1.tar.gz
   URL ${CMAKE_SOURCE_DIR}/vendor/libtheora-1.2.0alpha1.tar.gz
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --disable-oggtest --disable-examples --with-ogg=${CMAKE_BINARY_DIR}
@@ -83,6 +93,7 @@ EXTERNALPROJECT_ADD(
 )
 EXTERNALPROJECT_ADD(
   opus
+
   # URL https://ftp.osuosl.org/pub/xiph/releases/opus/opus-1.3.1.tar.gz
   URL ${CMAKE_SOURCE_DIR}/vendor/opus-1.3.1.tar.gz
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --disable-doc
@@ -91,6 +102,7 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   x264
   DEPENDS nasm
+
   # GIT_REPOSITORY git://git.videolan.org/x264.git
   # UPDATE_COMMAND ""
   URL ${CMAKE_SOURCE_DIR}/vendor/x264-snapshot-20180325-2245-stable.tar.bz2
@@ -101,6 +113,7 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   x265
   DEPENDS yasm
+
   # DOWNLOAD_COMMAND hg clone --insecure https://bitbucket.org/multicoreware/x265
   # UPDATE_COMMAND hg update -r stable
   URL ${CMAKE_SOURCE_DIR}/vendor/x265_3.2.1.tar.gz
@@ -112,6 +125,7 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   libvpx
   DEPENDS yasm
+
   # URL https://github.com/webmproject/libvpx/archive/v1.8.1.tar.gz
   URL ${CMAKE_SOURCE_DIR}/vendor/libvpx-1.8.1.tar.gz
   CONFIGURE_COMMAND PATH=$ENV{PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --size-limit=16384x16384 --enable-postproc --enable-multi-res-encoding --enable-temporal-denoising --disable-unit-tests --disable-install-docs --disable-examples
@@ -121,6 +135,7 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   aom
   DEPENDS yasm
+
   # DOWNLOAD_COMMAND git clone https://aomedia.googlesource.com/aom
   # UPDATE_COMMAND git pull
   URL ${CMAKE_SOURCE_DIR}/vendor/aom-4eb1e7795b9700d532af38a2d9489458a8038233.tar.gz
@@ -131,6 +146,7 @@ EXTERNALPROJECT_ADD(
 )
 EXTERNALPROJECT_ADD(
   freetype
+
   # URL http://download.savannah.gnu.org/releases/freetype/freetype-2.9.tar.gz
   URL ${CMAKE_SOURCE_DIR}/vendor/freetype-2.9.tar.gz
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --enable-static --without-png
@@ -139,6 +155,7 @@ EXTERNALPROJECT_ADD(
 )
 EXTERNALPROJECT_ADD(
   fribidi
+
   # URL http://fribidi.org/download/fribidi-1.0.2.tar.bz2
   URL ${CMAKE_SOURCE_DIR}/vendor/fribidi-1.0.2.tar.bz2
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --enable-static --disable-docs
@@ -146,6 +163,7 @@ EXTERNALPROJECT_ADD(
 )
 EXTERNALPROJECT_ADD(
   expat
+
   # URL http://downloads.sourceforge.net/project/expat/expat/2.2.5/expat-2.2.5.tar.bz2
   URL ${CMAKE_SOURCE_DIR}/vendor/expat-2.2.5.tar.bz2
   CONFIGURE_COMMAND PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --enable-static
@@ -154,6 +172,7 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   fontconfig
   DEPENDS freetype expat
+
   # URL http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.12.6.tar.bz2
   URL ${CMAKE_SOURCE_DIR}/vendor/fontconfig-2.12.6.tar.bz2
   CONFIGURE_COMMAND PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --enable-static
@@ -162,6 +181,7 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   libass
   DEPENDS yasm freetype fribidi fontconfig
+
   # URL https://github.com/libass/libass/releases/download/0.14.0/libass-0.14.0.tar.gz
   URL ${CMAKE_SOURCE_DIR}/vendor/libass-0.14.0.tar.gz
   CONFIGURE_COMMAND PATH=$ENV{PATH} PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --enable-static
@@ -171,8 +191,7 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   ffmpeg
   DEPENDS yasm opencore-amr lame libogg speex libvorbis libtheora opus x264 x265 libvpx freetype libass aom mbedtls
-  # URL https://ffmpeg.org/releases/ffmpeg-4.2.3.tar.bz2
-  URL ${CMAKE_SOURCE_DIR}/vendor/ffmpeg-4.2.3.tar.bz2
+  URL ${CMAKE_SOURCE_DIR}/vendor/ffmpeg-5.1.1.tar.bz2
   CONFIGURE_COMMAND PATH=$ENV{PATH} PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --datadir=${CMAKE_BINARY_DIR}/etc --disable-shared --enable-static --enable-pic --pkg-config-flags=--static --enable-gpl --enable-version3 --disable-doc --disable-debug --disable-ffplay --disable-outdevs --enable-runtime-cpudetect --extra-cflags=-I${CMAKE_BINARY_DIR}/include\ -static --extra-ldflags=-L${CMAKE_BINARY_DIR}/lib --extra-ldexeflags=-static --extra-libs=-lstdc++\ -lexpat\ -ldl\ -lm\ -lpthread --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libaom --enable-libmp3lame --enable-libspeex --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libfreetype --enable-libass --enable-mbedtls
   BUILD_COMMAND PATH=$ENV{PATH} make
   BUILD_IN_SOURCE 1
@@ -180,6 +199,7 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   libpng
   DEPENDS zlib
+
   # URL http://download.sourceforge.net/libpng/libpng-1.6.34.tar.gz
   URL ${CMAKE_SOURCE_DIR}/vendor/libpng-1.6.34.tar.gz
   CONFIGURE_COMMAND CFLAGS=-I${CMAKE_BINARY_DIR}/include CPPFLAGS=-I${CMAKE_BINARY_DIR}/include LDFLAGS=-L${CMAKE_BINARY_DIR}/lib ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --enable-static

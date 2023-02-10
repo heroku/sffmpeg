@@ -1,4 +1,4 @@
-FROM heroku/heroku:16-build
+FROM heroku/heroku:22-build
 
 RUN apt-get update && apt-get install -y devscripts equivs awscli
 
